@@ -150,7 +150,19 @@ begin
       insert into public.foods (name, category, serving_size, exchanges, image_url, equivalent_foods, learning_tip, keywords)
       values (n, cat::exchange_category, p, ex,
               'https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=' ||
-                replace(urlencode('luxury food photography, ' || n || ', premium nutrition app, pastel soft light, clean plate, professional healthcare aesthetic'), 'E2%80%82', '') ||
+                replace(urlencode(
+                  n || ', ' ||
+                  case cat
+                    when 'starch'    then 'on elegant small ceramic plate or portion bowl'
+                    when 'fruit'     then 'on elegant small plate or in small bowl'
+                    when 'vegetable' then 'on elegant small plate, fresh or lightly steamed'
+                    when 'protein'   then 'on elegant small white plate, properly portioned'
+                    when 'dairy'     then 'in glass, elegant cup, or small portion dish'
+                    when 'fat'       then 'on elegant small dish, in spoon, or in glass ramekin'
+                    else 'on elegant small plate'
+                  end || ', ' ||
+                  'soft pastel healthcare website aesthetic, studio light, bright white background, minimal elegant plating, premium food photography, no borders, no letterbox, no pillarbox, no black bars, fills entire frame, edge-to-edge content'
+                ), 'E2%80%82', '') ||
                 '&image_size=portrait_4_3',
               eq, tip, kw)
       on conflict do nothing;

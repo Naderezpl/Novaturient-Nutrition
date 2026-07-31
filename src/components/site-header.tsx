@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, Sparkles, X } from "lucide-react";
 
@@ -14,43 +14,15 @@ const links = [
 ];
 
 export function SiteHeader() {
-  const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
   return (
     <>
-      <motion.header
-        initial={false}
-        animate={scrolled ? "raised" : "flat"}
-        variants={{
-          flat: {
-            boxShadow: "0 0 0 0 rgba(15, 23, 42, 0)",
-            backgroundColor: "rgba(255, 255, 255, 0)",
-            borderBottomColor: "rgba(255, 255, 255, 0)",
-          },
-          raised: {
-            boxShadow:
-              "0 24px 70px -40px rgba(15, 23, 42, 0.35), 0 1px 0 rgba(255, 255, 255, 0.7) inset",
-            backgroundColor: "rgba(255, 255, 255, 0.62)",
-            borderBottomColor: "rgba(255, 255, 255, 0.75)",
-          },
-        }}
-        transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+      <header
         className="fixed inset-x-0 top-4 z-[60] px-4 lg:px-6"
         style={{ WebkitBackdropFilter: "blur(24px) saturate(120%)" }}
       >
-        <div
-          className={`mx-auto flex h-20 max-w-[1450px] items-center justify-between gap-4 rounded-full border border-white/70 px-5 lg:px-7 ${
-            scrolled ? "backdrop-blur-3xl" : "backdrop-blur-xl"
-          }`}
-        >
+        <div className="mx-auto flex h-20 max-w-[1450px] items-center justify-between gap-4 rounded-full border border-white/70 bg-white/62 px-5 shadow-[0_24px_70px_-40px_rgba(15,23,42,0.35),0_1px_0_rgba(255,255,255,0.7)_inset] backdrop-blur-3xl lg:px-7">
           <Link
             href="/"
             className="flex items-center gap-2.5 text-slate-900 transition hover:opacity-90"
@@ -106,7 +78,7 @@ export function SiteHeader() {
             <Menu className="h-5 w-5" />
           </button>
         </div>
-      </motion.header>
+      </header>
 
       <AnimatePresence>
         {open ? (

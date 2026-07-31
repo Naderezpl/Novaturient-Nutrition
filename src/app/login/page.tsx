@@ -10,7 +10,7 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { ADMIN_EMAIL, ADMIN_PASSWORD, getDefaultRedirect, useAuthStore } from "@/lib/auth-store";
+import { getDefaultRedirect, useAuthStore } from "@/lib/auth-store";
 
 const schema = z.object({
   email: z.string().email(),
@@ -44,8 +44,8 @@ function LoginPageInner() {
   const form = useForm<FormValues>({
     resolver: zodResolver(schema),
     defaultValues: {
-      email: params.get("role") === "dietitian" ? ADMIN_EMAIL : "",
-      password: params.get("role") === "dietitian" ? ADMIN_PASSWORD : "",
+      email: "",
+      password: "",
       role: params.get("role") === "dietitian" ? "dietitian" : "client",
     },
   });
@@ -104,11 +104,6 @@ function LoginPageInner() {
             </Button>
             <p className="text-xs text-rose-500">{form.formState.errors.root?.message}</p>
           </form>
-
-          <div className="mt-5 space-y-2 text-sm text-slate-500">
-            <p>Admin: `novaturient.nutritionn@gmail.com`</p>
-            <p>Password: `admin`</p>
-          </div>
 
           <p className="mt-6 text-sm text-slate-500">
             New client?{" "}

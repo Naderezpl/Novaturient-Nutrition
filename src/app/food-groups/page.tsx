@@ -209,12 +209,14 @@ function FoodGroupsContent() {
                         key={item.id}
                         className="overflow-hidden rounded-[28px] border border-white/70 bg-white/82 shadow-[0_18px_40px_-28px_rgba(15,23,42,0.3)]"
                       >
-                        <img
-                          src={item.imageUrl}
-                          alt={item.name}
-                          className="h-48 w-full object-cover"
-                          draggable={false}
-                        />
+                        <div className="aspect-[4/3] w-full overflow-hidden bg-white">
+                          <img
+                            src={item.imageUrl}
+                            alt={item.name}
+                            className="h-full w-full scale-[1.08] object-cover"
+                            draggable={false}
+                          />
+                        </div>
                         <div className="space-y-4 p-5">
                           <div>
                             <p className="text-xs uppercase tracking-[0.2em] text-slate-400">

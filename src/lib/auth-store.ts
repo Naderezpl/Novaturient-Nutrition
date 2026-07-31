@@ -37,25 +37,21 @@ export const useAuthStore = create<AuthStore>()(
       role: null,
       login: (role, email, password) => {
         const normalizedEmail = email?.trim().toLowerCase();
-
-        if (normalizedEmail === ADMIN_EMAIL.toLowerCase()) {
-          if (password !== ADMIN_PASSWORD) {
-            return {
-              success: false,
-              role: null,
-              error: "Wrong admin password.",
-            };
-          }
-
-          set({ role: "dietitian", user: dietitianUser });
-          return { success: true, role: "dietitian" };
-        }
+        const normalizedPassword = password ?? "";
 
         if (role === "dietitian") {
+          if (
+            normalizedEmail === ADMIN_EMAIL.toLowerCase() &&
+            normalizedPassword === ADMIN_PASSWORD
+          ) {
+            set({ role: "dietitian", user: dietitianUser });
+            return { success: true, role: "dietitian" };
+          }
+
           return {
             success: false,
             role: null,
-            error: "Only the admin account can access the admin panel.",
+            error: "Invalid email or password.",
           };
         }
 

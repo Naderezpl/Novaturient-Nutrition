@@ -22,35 +22,190 @@ export const categoryLabels: Record<ExchangeCategory, string> = {
   fat: "Fat",
 };
 
+const DEMO_AESTHETIC =
+  "soft pastel healthcare website aesthetic, studio light, bright white background, minimal elegant plating, premium food photography, no borders, no letterbox, no pillarbox, no black bars, fills entire frame, edge-to-edge content";
+
+function platingForDemo(category: ExchangeCategory): string {
+  switch (category) {
+    case "starch":
+      return "on elegant small ceramic plate or portion bowl";
+    case "fruit":
+      return "on elegant small plate or in small bowl";
+    case "vegetable":
+      return "on elegant small plate, fresh or lightly steamed";
+    case "protein":
+      return "on elegant small white plate, properly portioned";
+    case "dairy":
+      return "in glass, elegant cup, or small portion dish";
+    case "fat":
+      return "on elegant small dish, in spoon, or in glass ramekin";
+    default:
+      return "on elegant small plate";
+  }
+}
+
 const categoryConfig: Record<ExchangeCategory, { base: string[]; portions: string[]; tint: string }> = {
   starch: {
-    base: ["Brown Rice", "Oatmeal", "Pita Bread", "Sweet Potato", "Quinoa", "Popcorn", "Pasta", "Tortilla"],
-    portions: ["1/3 cup cooked", "1 slice", "1 small", "1/2 cup cooked", "3 cups popped"],
+    base: [
+      "Brown rice", "White rice", "Wild rice", "Oatmeal", "Rolled oats", "Couscous", "Bulgur", "Barley",
+      "Millet", "Quinoa", "Farro", "Freekeh", "Pita bread", "Whole wheat bread", "Sourdough bread",
+      "Rye bread", "Multigrain bread", "Tortilla", "Corn tortilla", "Pasta", "Whole wheat pasta",
+      "Brown rice pasta", "Chickpea pasta", "Sweet potato", "Regular potato", "Yam", "Taro", "Cassava",
+      "Green peas", "Corn", "Popcorn", "Rice cakes", "Crackers", "Graham crackers", "Pretzels",
+      "English muffin", "Crumpet", "Matzo", "Bagel", "Croissant", "Pancake", "Waffle", "French toast",
+      "Scone", "Biscotti", "Lentils", "Black beans", "Kidney beans", "Chickpeas", "French fries",
+      "Hash browns", "Mixed grain bowl", "Ramen noodles", "Basmati rice", "Jasmine rice", "Rice crackers",
+    ],
+    portions: ["1/3 cup cooked", "1 slice", "1 small", "1/2 cup cooked", "3 cups popped", "1/2 pita", "1 cup kernels"],
     tint: "from-rose-200/80 to-orange-100/80",
   },
   fruit: {
-    base: ["Apple", "Banana", "Berries", "Orange", "Pear", "Mango", "Kiwi", "Peaches"],
-    portions: ["1 small", "1 medium", "3/4 cup", "1 cup sliced", "1/2 large"],
+    base: [
+      "Apple", "Granny Smith apple", "Red apple", "Banana", "Orange", "Mandarin clementine", "Tangerine",
+      "Grapefruit", "Pear", "Bosc pear", "Mango", "Pineapple", "Papaya", "Guava", "Passion fruit",
+      "Kiwi", "Lychee", "Peaches", "White peach", "Nectarine", "Plum", "Apricot", "Sweet cherries",
+      "Fresh fig", "Blackberry", "Raspberry", "Mixed berries", "Strawberries", "Blueberries",
+      "Cranberries", "Grapes", "Green grapes", "Red grapes", "Watermelon", "Cantaloupe melon",
+      "Honeydew melon", "Pomegranate", "Dragon fruit pitaya", "Star fruit carambola", "Persimmon",
+      "Mulberry", "Coconut meat", "Dried dates", "Medjool dates", "Raisins", "Golden raisins",
+      "Dried currants", "Sultanas", "Dried prunes", "Dried apricots", "Dried mango", "Banana chips",
+      "Apple juice", "Orange juice", "Grape juice", "Pineapple juice", "Prune juice", "Mango nectar",
+      "Frozen mixed berries", "Frozen mango chunks", "Unsweetened applesauce", "Pear sauce",
+      "Fruit compote", "Fruit smoothie base", "Lemon", "Lime",
+    ],
+    portions: ["1 small", "1 medium", "3/4 cup", "1 cup sliced", "1/2 large", "2 tbsp", "1/2 cup"],
     tint: "from-amber-100/90 to-pink-100/80",
   },
   vegetable: {
-    base: ["Cucumber", "Spinach", "Carrots", "Tomato", "Broccoli", "Peppers", "Zucchini", "Salad Greens"],
-    portions: ["1 cup raw", "1/2 cup cooked", "1 bowl", "3/4 cup"],
+    base: [
+      "Cucumber", "Persian cucumber", "Mixed salad greens", "Iceberg lettuce", "Romaine lettuce",
+      "Butter lettuce bibb", "Green leaf lettuce", "Arugula rocket", "Kale", "Baby spinach", "Spinach",
+      "Collard greens", "Mustard greens", "Turnip greens", "Swiss chard", "Beet greens", "Dandelion greens",
+      "Watercress", "Endive", "Radicchio", "Frisee curly endive", "Escarole", "Mizuna", "Tat soi",
+      "Carrots", "Baby carrots", "Parsnips", "Beetroot", "Turnip", "Radish", "Daikon radish",
+      "Tomato", "Cherry tomatoes", "Roma tomato", "Heirloom tomato", "Tomatillo",
+      "Bell peppers", "Green pepper", "Red pepper", "Yellow pepper", "Orange pepper",
+      "Jalapeno chili", "Poblano chili", "Broccoli", "Broccoli rabe rapini", "Cauliflower",
+      "Purple cauliflower", "Romanesco", "Cabbage", "Red cabbage", "Savoy cabbage", "Napa cabbage",
+      "Bok choy", "Baby bok choy", "Choy sum", "Gai lan Chinese broccoli", "Brussels sprouts",
+      "Celery", "Fennel bulb", "Green beans", "French beans haricot vert", "Wax beans",
+      "Sugar snap peas", "Snow peas", "Asparagus", "Zucchini", "Yellow squash", "Crookneck squash",
+      "Acorn squash", "Butternut squash", "Spaghetti squash", "Kabocha squash", "Pumpkin",
+      "Okra", "Eggplant", "Baby eggplant", "Onion", "Red onion", "Yellow onion", "Sweet onion",
+      "Shallots", "Leek", "Scallions green onion", "Garlic", "Mushrooms", "Cremini mushrooms",
+      "Shiitake mushrooms", "Oyster mushrooms", "Portobello mushroom", "Enoki mushrooms",
+      "Artichoke", "Artichoke hearts", "Hearts of palm", "Celery root celeriac", "Jicama",
+      "Rutabaga", "Kohlrabi", "Chayote", "Bamboo shoots", "Water chestnuts", "Corn salad mache",
+      "Microgreens assortment", "Pickled cucumber", "Sauerkraut", "Kimchi",
+    ],
+    portions: ["1 cup raw", "1/2 cup cooked", "1 bowl", "3/4 cup", "6 spears", "8 pods"],
     tint: "from-emerald-100/90 to-lime-100/80",
   },
   protein: {
-    base: ["Chicken Breast", "Salmon", "Eggs", "Turkey", "Greek Yogurt", "Lentils", "Tofu", "Tuna"],
-    portions: ["1 oz", "2 oz", "1/2 cup", "3/4 cup", "1 piece"],
+    base: [
+      "Chicken breast", "Skinless chicken breast", "Chicken thigh lean", "Skinless chicken thigh",
+      "Chicken drumstick", "Chicken wing", "Chicken liver",
+      "Turkey breast", "Turkey thigh lean", "Ground turkey", "Turkey bacon light", "Turkey deli slices",
+      "Chicken deli slices", "Lean beef", "Beef sirloin", "Beef tenderloin", "Beef eye of round",
+      "Beef top round", "Beef bottom round", "Beef flank steak", "Lean ground beef",
+      "Extra lean ground beef", "Veal lean cutlet", "Veal liver",
+      "Lamb lean", "Lamb leg lean", "Lamb loin chop lean",
+      "Pork tenderloin", "Pork loin lean", "Pork chop center cut lean", "Pork ham lean",
+      "Canadian bacon", "Pork bacon light", "Duck breast skinless", "Quail", "Rabbit lean",
+      "Venison game meat", "Bison lean", "Ostrich lean",
+      "Salmon", "Atlantic salmon", "Sockeye salmon", "Smoked salmon lox",
+      "Tuna canned in water", "Fresh tuna steak", "Sardines canned", "Anchovies",
+      "Mackerel", "Herring", "Trout", "Rainbow trout",
+      "White fish cod haddock", "Cod fillet", "Haddock", "Hake", "Pollock", "Halibut",
+      "Flounder sole", "Tilapia", "Catfish", "Grouper", "Snapper", "Sea bass", "Mahi mahi",
+      "Swordfish", "Shrimp", "Prawns large", "Scallops", "Crab surimi", "King crab legs",
+      "Snow crab legs", "Lobster tail", "Clams", "Mussels", "Oysters",
+      "Calamari squid", "Grilled octopus", "Caviar small portion",
+      "Eggs", "Egg whites", "Egg yolks", "Egg substitute", "Quail eggs",
+      "Greek yogurt nonfat", "Greek yogurt low fat", "Icelandic skyr",
+      "Cottage cheese low fat", "Ricotta part skim",
+      "Lentils cooked", "Red lentils cooked", "Split peas cooked",
+      "Black beans protein", "Kidney beans protein", "Pinto beans", "Cannellini beans",
+      "Navy beans", "Great northern beans", "Lima beans", "Fava beans", "Mung beans",
+      "Adzuki beans", "Chickpeas hummus base", "Edamame green soybeans",
+      "Firm tofu", "Extra firm tofu", "Silken soft tofu", "Tempeh", "Seitan wheat meat",
+      "Textured vegetable protein TVP", "Pea protein shake", "Whey protein shake",
+      "Lean ham deli", "Roast beef deli slices", "Pastrami lean", "Corned beef lean",
+      "Prosciutto", "Chorizo low fat", "Beef jerky low sugar", "Low sugar protein bar",
+    ],
+    portions: ["1 oz", "2 oz", "1/2 cup", "3/4 cup", "1 piece", "5 large shrimp", "1 whole egg"],
     tint: "from-sky-100/90 to-cyan-100/80",
   },
   dairy: {
-    base: ["Milk", "Labneh", "Yogurt", "Kefir", "Cottage Cheese", "Cheese Cubes", "Ricotta", "Laban"],
-    portions: ["1 cup", "3/4 cup", "1/3 cup", "2 slices"],
+    base: [
+      "Milk skim low fat", "Milk whole", "2% reduced fat milk", "1% low fat milk",
+      "Laban Ayran low salt", "Kefir", "Buttermilk low fat", "Evaporated milk", "Condensed milk",
+      "Powdered milk", "Goat milk", "Sheep milk", "Buffalo milk", "Lactose free milk",
+      "Chocolate milk low fat", "Strawberry milk low fat", "Vanilla low fat milk",
+      "Soy milk unsweetened", "Almond milk unsweetened", "Oat milk unsweetened", "Rice milk unsweetened",
+      "Cashew milk unsweetened", "Hemp milk unsweetened",
+      "Yogurt plain low fat", "Yogurt plain nonfat", "Yogurt plain whole milk",
+      "Greek yogurt plain nonfat", "Greek yogurt plain low fat", "Greek yogurt vanilla low fat",
+      "Labneh strained yogurt", "Icelandic skyr plain",
+      "Cottage cheese low fat", "Cottage cheese nonfat",
+      "Ricotta part skim", "Ricotta whole milk", "Mascarpone light",
+      "Cream cheese light", "Cream cheese regular",
+      "Low fat cheese cubes", "American cheese light", "Feta light", "Feta regular",
+      "Halloumi", "Mozzarella low moisture", "Fresh buffalo mozzarella", "String cheese low fat",
+      "Ricotta salata", "Goat cheese soft", "Light crumbled feta", "Sheep cheese",
+      "Light reduced fat cheddar", "Sharp regular cheddar", "Mild cheddar",
+      "Light gouda", "Regular gouda", "Light swiss cheese", "Regular swiss",
+      "Emmental", "Gruyere", "Parmesan grated", "Pecorino romano", "Romano cheese",
+      "Asiago", "Light provolone", "Monterey jack", "Colby jack", "Light havarti",
+      "Light brie", "Light camembert", "Blue cheese crumbles", "Light gorgonzola",
+      "Roquefort", "Manchego", "Paneer", "Queso fresco",
+      "Light cheese spread", "Cheese whiz light",
+      "Ice milk light ice cream", "Light frozen yogurt", "Light gelato", "Sherbet", "Sorbet",
+      "Sugar free low fat pudding", "Light custard", "Sugar free low fat flan",
+      "Sugar free tapioca pudding", "Sugar free low fat rice pudding", "Light semolina pudding",
+      "Small light milkshake", "Skim milk hot cocoa", "Skim milk chai latte", "Skim milk latte",
+      "Skim milk cappuccino", "Milk macchiato", "Dairy base smoothie",
+    ],
+    portions: ["1 cup", "3/4 cup", "1/3 cup", "2 slices", "1 oz", "1 tbsp"],
     tint: "from-violet-100/90 to-fuchsia-100/70",
   },
   fat: {
-    base: ["Olive Oil", "Avocado", "Tahini", "Nuts", "Seeds", "Peanut Butter", "Walnuts", "Hummus"],
-    portions: ["1 tsp", "1 tbsp", "1/8 avocado", "6 pieces", "2 tbsp"],
+    base: [
+      "Olive oil", "Extra virgin olive oil", "Canola oil", "Sunflower oil", "Safflower oil",
+      "Soybean oil", "Corn oil", "Vegetable oil blend", "Peanut oil", "Sesame oil",
+      "Toasted sesame oil", "Walnut oil", "Almond oil", "Avocado oil", "Grape seed oil",
+      "Flaxseed oil", "Pumpkin seed oil", "Virgin coconut oil", "Red palm oil",
+      "Ghee clarified butter", "Butter margarine", "Salted butter", "Unsalted butter",
+      "Light soft tub margarine", "Stick margarine", "Light buttery spread",
+      "Light mayonnaise", "Regular mayonnaise", "Olive oil mayonnaise", "Light garlic aioli",
+      "Light vinaigrette dressing", "Regular vinaigrette dressing", "Light italian dressing",
+      "Light ranch dressing", "Light blue cheese dressing", "Light thousand island",
+      "Balsamic glaze reduction", "Tahini", "Sesame tahini paste",
+      "Hummus", "Baba ghanoush", "Mutabbal eggplant dip", "Light tzatziki",
+      "Guacamole no added oil", "Salsa oil base", "Light basil pesto", "Olive tapenade spread",
+      "No added oil peanut butter", "Creamy peanut butter", "Crunchy peanut butter",
+      "Almond butter", "Cashew butter", "Hazelnut butter", "Walnut butter",
+      "Sunflower seed butter", "Pumpkin seed butter", "Tahini sesame butter",
+      "Soy nut butter", "Coconut butter manna", "Light chocolate hazelnut spread",
+      "Vegetable shortening", "Rendered lard small portion", "Beef suet fat block",
+      "Light oil cooking spray", "Whipped butter",
+      "Avocado", "Avocado thin slices",
+      "Olives black green", "Black olives", "Green olives", "Kalamata olives", "Nicoise olives",
+      "Almonds", "Slivered almonds", "Almond slices",
+      "Walnuts", "Roasted peanuts", "Dry roasted unsalted peanuts",
+      "Pistachios", "Cashews", "Macadamia nuts", "Hazelnuts", "Pecans", "Brazil nuts",
+      "Pine nuts pignoli", "Pili nuts", "Roasted unsalted chestnuts",
+      "Pumpkin squash seeds", "Pepitas pumpkin seed kernels", "Sunflower seeds",
+      "Sesame seeds", "Whole flax seeds", "Ground flaxseed flax meal",
+      "Chia seeds", "Hemp seeds hemp hearts", "Poppy seeds",
+      "Shredded unsweetened coconut", "Toasted coconut flakes",
+      "Light coconut cream", "Light canned coconut milk",
+      "Light sour cream", "Regular sour cream", "Soured milk clabber",
+      "Light creme fraiche", "Heavy double cream", "Light whipping cream",
+      "Half and half", "Light whipped cream topping", "Light non dairy creamer",
+      "Imitation bacon bits", "Crispy fried onions small", "Roasted sesame seeds",
+    ],
+    portions: ["1 tsp", "1 tbsp", "1/8 avocado", "6 pieces", "2 tbsp", "1/2 cup"],
     tint: "from-stone-200/90 to-yellow-100/70",
   },
 };
@@ -162,7 +317,7 @@ export const foods: FoodItem[] = Object.entries(categoryConfig).flatMap(([catego
       learningTip: `${base} can fit well in a balanced meal when you pair it with protein or fiber for staying power.`,
       keywords: [base.toLowerCase(), category, "exchange", "meal", "portion"],
       imageUrl: toImagePrompt(
-        `luxury food photography, ${base}, premium nutrition app, pastel soft light, clean plate, professional healthcare aesthetic`,
+        `${base}, ${platingForDemo(category as ExchangeCategory)}, ${DEMO_AESTHETIC}`,
       ),
     };
   }),

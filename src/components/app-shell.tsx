@@ -42,11 +42,9 @@ export function RoleGuard({
   children: React.ReactNode;
 }) {
   const router = useRouter();
-  const { hydrated, user, role: activeRole } = useAuthStore((state) => ({
-    hydrated: state.hydrated,
-    user: state.user,
-    role: state.role,
-  }));
+  const hydrated = useAuthStore((state) => state.hydrated);
+  const user = useAuthStore((state) => state.user);
+  const activeRole = useAuthStore((state) => state.role);
 
   useEffect(() => {
     if (!hydrated) {
@@ -54,7 +52,10 @@ export function RoleGuard({
     }
 
     if (!user || activeRole !== role) {
-      router.replace(getDefaultRedirect(activeRole));
+      const target = getDefaultRedirect(activeRole);
+      if (target !== window.location.pathname) {
+        router.replace(target);
+      }
     }
   }, [activeRole, hydrated, role, router, user]);
 
