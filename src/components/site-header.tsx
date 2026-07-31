@@ -43,12 +43,14 @@ export function SiteHeader() {
           },
         }}
         transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-        className={`sticky top-0 z-[60] w-full border-b border-transparent backdrop-blur-2xl backdrop-saturate-[120%] ${
-          scrolled ? "backdrop-blur-3xl" : ""
-        }`}
+        className="fixed inset-x-0 top-4 z-[60] px-4 lg:px-6"
         style={{ WebkitBackdropFilter: "blur(24px) saturate(120%)" }}
       >
-        <div className="mx-auto flex h-20 max-w-[1450px] items-center justify-between gap-4 px-4 lg:px-6">
+        <div
+          className={`mx-auto flex h-20 max-w-[1450px] items-center justify-between gap-4 rounded-[30px] border border-transparent px-4 lg:px-6 ${
+            scrolled ? "backdrop-blur-3xl" : "backdrop-blur-xl"
+          }`}
+        >
           <Link
             href="/"
             className="flex items-center gap-2.5 text-slate-900 transition hover:opacity-90"

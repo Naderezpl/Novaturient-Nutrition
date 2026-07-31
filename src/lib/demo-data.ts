@@ -241,8 +241,8 @@ export const clients: ClientRecord[] = Array.from({ length: 30 }, (_, index) => 
 
 export const dietitianUser: DemoUser = {
   id: "dietitian-1",
-  fullName: "Dr. Leena Rahal",
-  email: "leena@novaturient.app",
+  fullName: "Novaturient Admin",
+  email: "novaturient.nutritionn@gmail.com",
   role: "dietitian",
 };
 

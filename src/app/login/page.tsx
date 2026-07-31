@@ -10,11 +10,11 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { getDefaultRedirect, useAuthStore } from "@/lib/auth-store";
+import { ADMIN_EMAIL, ADMIN_PASSWORD, getDefaultRedirect, useAuthStore } from "@/lib/auth-store";
 
 const schema = z.object({
   email: z.string().email(),
-  password: z.string().min(6),
+  password: z.string().min(4),
   role: z.enum(["client", "dietitian"]),
 });
 
@@ -44,15 +44,23 @@ function LoginPageInner() {
   const form = useForm<FormValues>({
     resolver: zodResolver(schema),
     defaultValues: {
-      email: "mila.nasser@novaturient.app",
-      password: "demo123",
+      email: params.get("role") === "dietitian" ? ADMIN_EMAIL : "",
+      password: params.get("role") === "dietitian" ? ADMIN_PASSWORD : "",
       role: params.get("role") === "dietitian" ? "dietitian" : "client",
     },
   });
 
   const onSubmit = (values: FormValues) => {
-    login(values.role, values.email);
-    router.push(getDefaultRedirect(values.role));
+    const result = login(values.role, values.email, values.password);
+
+    if (!result.success) {
+      form.setError("root", {
+        message: result.error ?? "Unable to sign in.",
+      });
+      return;
+    }
+
+    router.push(getDefaultRedirect(result.role));
   };
 
   return (
@@ -94,11 +102,12 @@ function LoginPageInner() {
             <Button className="w-full" size="lg" type="submit">
               Enter workspace
             </Button>
+            <p className="text-xs text-rose-500">{form.formState.errors.root?.message}</p>
           </form>
 
           <div className="mt-5 space-y-2 text-sm text-slate-500">
-            <p>Client demo: `mila.nasser@novaturient.app`</p>
-            <p>Dietitian demo: any valid email with the dietitian tab selected</p>
+            <p>Admin: `novaturient.nutritionn@gmail.com`</p>
+            <p>Password: `admin`</p>
           </div>
 
           <p className="mt-6 text-sm text-slate-500">

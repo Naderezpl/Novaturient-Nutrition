@@ -144,7 +144,7 @@ export function AppShell({ role, title, subtitle, children, actions }: AppShellP
         </aside>
 
         <div className="flex min-w-0 flex-1 flex-col">
-          <header className="rounded-[30px] border border-white/70 bg-white/55 p-4 shadow-[0_20px_70px_-40px_rgba(15,23,42,0.35)] backdrop-blur-2xl">
+          <header className="sticky top-4 z-20 rounded-[30px] border border-white/70 bg-white/65 p-4 shadow-[0_20px_70px_-40px_rgba(15,23,42,0.35)] backdrop-blur-2xl">
             <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
               <div>
                 <p className="text-xs uppercase tracking-[0.35em] text-slate-400">

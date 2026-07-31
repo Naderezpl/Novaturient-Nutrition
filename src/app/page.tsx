@@ -7,7 +7,7 @@ import { ArrowRight, BookOpen, BrainCircuit, HeartHandshake, HeartPulse, ShieldC
 import { SiteHeader } from "@/components/site-header";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { clients, coachPrompts, currentClient, defaultClientPlan, lessons } from "@/lib/demo-data";
+import { clients, coachPrompts, defaultClientPlan, lessons } from "@/lib/demo-data";
 
 export default function Home() {
   return (
@@ -182,10 +182,10 @@ export default function Home() {
               <CardContent className="space-y-4">
                 <div className="grid gap-4 md:grid-cols-2">
                   <div className="rounded-[24px] bg-white/78 p-5 ring-1 ring-white/70">
-                    <p className="text-sm font-medium text-slate-900">Sample client</p>
-                    <p className="mt-2 text-2xl font-semibold text-slate-900">{currentClient.user.fullName}</p>
+                    <p className="text-sm font-medium text-slate-900">Client dashboard</p>
+                    <p className="mt-2 text-2xl font-semibold text-slate-900">Personal nutrition workspace</p>
                     <p className="mt-2 text-sm text-slate-500">
-                      Goal: {currentClient.user.goal?.replace("_", " ")} • Activity: {currentClient.user.activityLevel}
+                      Goal-based exchange tracking • activity-aware coaching
                     </p>
                   </div>
                   <div className="rounded-[24px] bg-white/78 p-5 ring-1 ring-white/70">
