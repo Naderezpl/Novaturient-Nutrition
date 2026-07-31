@@ -1,19 +1,8 @@
 import type { Metadata } from "next";
-import { Fraunces, Manrope } from "next/font/google";
 
 import { AppProviders } from "@/providers/app-providers";
 
 import "./globals.css";
-
-const bodyFont = Manrope({
-  variable: "--font-body",
-  subsets: ["latin"],
-});
-
-const displayFont = Fraunces({
-  variable: "--font-display",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: "Novaturient Nutrition",
@@ -26,10 +15,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${bodyFont.variable} ${displayFont.variable} h-full antialiased`}
-    >
+    <html lang="en" className="h-full antialiased">
       <body className="min-h-full">
         <AppProviders>{children}</AppProviders>
       </body>
