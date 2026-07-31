@@ -2,14 +2,12 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight, BookOpen, BrainCircuit, FileText, HeartHandshake, HeartPulse, ShieldCheck, Sparkles, Users } from "lucide-react";
+import { ArrowRight, BookOpen, BrainCircuit, HeartHandshake, HeartPulse, ShieldCheck, Sparkles, Users } from "lucide-react";
 
 import { SiteHeader } from "@/components/site-header";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { clients, coachPrompts, currentClient, defaultClientPlan, lessons } from "@/lib/demo-data";
-
-const PDF_HREF = process.env.NEXT_PUBLIC_FOOD_GROUPS_PDF ?? "/food-groups/food-groups-reference.pdf";
 
 export default function Home() {
   return (
@@ -38,10 +36,10 @@ export default function Home() {
                 </h1>
               </div>
               <div className="flex flex-wrap gap-3">
-                <Link href={PDF_HREF} target="_blank" rel="noreferrer">
+                <Link href="/food-groups">
                   <Button variant="secondary">
-                    <FileText className="h-4 w-4" />
-                    Food groups reference
+                    <BookOpen className="h-4 w-4" />
+                    Food groups
                   </Button>
                 </Link>
                 <Link href="/login">
@@ -61,7 +59,7 @@ export default function Home() {
                 </h2>
                 <p className="mt-6 max-w-2xl text-base leading-8 text-slate-600">
                   A soft, polished SaaS experience for clients and dietitians: meal building, adherence tracking, food
-                  learning, AI coaching, and a standalone food-groups reference page built for clean PDF export.
+                  learning, AI coaching, and a Food Groups page organized into clickable categories and smaller groups.
                 </p>
                 <div className="mt-8 flex flex-wrap gap-3">
                   <Link href="/signup">

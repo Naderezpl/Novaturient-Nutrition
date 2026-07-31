@@ -116,7 +116,10 @@ export function AppShell({ role, title, subtitle, children, actions }: AppShellP
             })}
             <Link
               href="/food-groups"
-              className="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm text-slate-500 transition-all hover:bg-white/60 hover:text-slate-900"
+              className={cn(
+                "flex items-center gap-3 rounded-2xl px-4 py-3 text-sm text-slate-500 transition-all hover:bg-white/60 hover:text-slate-900",
+                pathname === "/food-groups" && "bg-white/85 text-slate-900 shadow-sm",
+              )}
             >
               <BookOpen className="h-4 w-4" />
               Food Groups

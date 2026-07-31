@@ -248,6 +248,14 @@ export const dietitianUser: DemoUser = {
 
 export const currentClient = clients[4];
 
+export function getClientRecordForEmail(email?: string | null) {
+  if (!email) {
+    return currentClient;
+  }
+
+  return clients.find((client) => client.user.email === email) ?? currentClient;
+}
+
 export function buildSearchResults(query: string): SearchResult[] {
   const value = query.toLowerCase();
 

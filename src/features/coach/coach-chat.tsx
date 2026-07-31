@@ -3,12 +3,12 @@
 import Link from "next/link";
 import { useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import type { LucideIcon } from "lucide-react";
 import {
   ArrowUpRight,
   BookOpen,
   BrainCircuit,
   Dumbbell,
-  FileText,
   Leaf,
   Milk,
   Send,
@@ -32,12 +32,6 @@ import { EXCHANGE_GROUP_ORDER, FOOD_GROUPS_REFERENCE } from "@/features/coach/fo
 import { exchangeOrder, getRemainingExchanges } from "@/lib/exchanges";
 import type { ExchangeCategory } from "@/types/app";
 import type { ReferenceFood } from "@/features/coach/food-groups-reference";
-
-const PDF_HREF =
-  (typeof process !== "undefined" && process.env?.NEXT_PUBLIC_FOOD_GROUPS_PDF) ||
-  "/food-groups/food-groups-reference.pdf";
-
-import type { LucideIcon } from "lucide-react";
 
 const CATEGORY_ICON: Record<ExchangeCategory, LucideIcon> = {
   starch: Wheat,
@@ -94,10 +88,10 @@ export function CoachChat() {
       role: "coach",
       title: "Hello, I'm your AI exchange coach",
       content: [
-        "I teach with the same food group tables in the Novaturient Food Groups Reference teaching file.",
-        "If you ask for alternatives — like \"another protein than fish\" — I'll give you several one-exchange picks, each one citing the Protein group table, and I'll never shame you for your choices.",
+        "I teach with the same food group categories shown on the Food Groups page.",
+        "If you ask for alternatives — like \"another protein than fish\" — I'll give you several one-exchange picks, each one citing the Protein category and smaller group, and I'll never shame you for your choices.",
       ],
-      citation: "Answers reference the Food Groups Reference serving tables.",
+      citation: "Answers reference the Food Groups categories and food-group rows.",
       stamp: todayShortStamp(),
     },
   ]);
@@ -138,10 +132,10 @@ export function CoachChat() {
               Always teaching, never shaming.
             </h2>
           </div>
-          <Link href={PDF_HREF} target="_blank" rel="noreferrer">
+          <Link href="/food-groups">
             <Button variant="secondary">
-              <FileText className="h-4 w-4" />
-              Open teaching file
+              <BookOpen className="h-4 w-4" />
+              Open Food Groups
             </Button>
           </Link>
         </div>
@@ -208,7 +202,7 @@ export function CoachChat() {
             </Button>
           </form>
           <p className="px-1 text-xs text-slate-400">
-            Teaching-file citations anchor every answer to the same food-group exchange tables your dietitian uses.
+            Category citations anchor every answer to the same Food Groups page your dietitian uses.
           </p>
         </div>
       </Card>
@@ -364,13 +358,11 @@ function CoachBubble({ message }: { message: Message }) {
                       </div>
                     </div>
                     <Link
-                      href={PDF_HREF}
-                      target="_blank"
-                      rel="noreferrer"
+                      href="/food-groups"
                       className="inline-flex items-center gap-1 text-[11px] uppercase tracking-[0.2em] text-slate-500 hover:text-slate-800"
                     >
-                      <FileText className="h-3.5 w-3.5" />
-                      PDF table
+                      <BookOpen className="h-3.5 w-3.5" />
+                      Food Groups
                     </Link>
                   </div>
                   <ul className="mt-3 grid gap-2">
@@ -418,16 +410,14 @@ function CoachBubble({ message }: { message: Message }) {
         {message.citation ? (
           <div className="mt-4 flex flex-wrap items-center justify-between gap-2 rounded-2xl border border-white/70 bg-white/70 px-4 py-2.5 text-[12px] text-slate-500">
             <div className="inline-flex items-center gap-2">
-              <FileText className="h-3.5 w-3.5" />
+              <BookOpen className="h-3.5 w-3.5" />
               {message.citation}
             </div>
             <Link
-              href={PDF_HREF}
-              target="_blank"
-              rel="noreferrer"
+              href="/food-groups"
               className="inline-flex items-center gap-1 font-medium text-slate-700 hover:text-slate-900"
             >
-              Open teaching file <ArrowUpRight className="h-3.5 w-3.5" />
+              Open Food Groups <ArrowUpRight className="h-3.5 w-3.5" />
             </Link>
           </div>
         ) : null}
@@ -564,7 +554,7 @@ function buildReply(
           "• Explain my last meal",
           "Or click one of the group buttons on the right to open its teaching page.",
         ],
-        citation: "Every answer references the Novaturient Food Groups Reference tables.",
+        citation: "Every answer references the Novaturient Food Groups categories.",
       };
     }
   }
