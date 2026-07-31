@@ -47,7 +47,7 @@ export function SiteHeader() {
         style={{ WebkitBackdropFilter: "blur(24px) saturate(120%)" }}
       >
         <div
-          className={`mx-auto flex h-20 max-w-[1450px] items-center justify-between gap-4 rounded-[30px] border border-transparent px-4 lg:px-6 ${
+          className={`mx-auto flex h-20 max-w-[1450px] items-center justify-between gap-4 rounded-full border border-white/70 px-5 lg:px-7 ${
             scrolled ? "backdrop-blur-3xl" : "backdrop-blur-xl"
           }`}
         >

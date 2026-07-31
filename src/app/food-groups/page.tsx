@@ -50,10 +50,14 @@ export default function FoodGroupsPage() {
 
 function FoodGroupsContent() {
   const user = useAuthStore((state) => state.user);
-  const items = useClientSnapshotStore((state) => state.getItemsForUser(user?.id));
+  const allItems = useClientSnapshotStore((state) => state.items);
   const confirmItem = useClientSnapshotStore((state) => state.confirmItem);
   const removeItem = useClientSnapshotStore((state) => state.removeItem);
   const [quantities, setQuantities] = useState<Record<string, number>>({});
+  const items = useMemo(
+    () => (!user ? [] : allItems.filter((item) => item.userId === user.id)),
+    [allItems, user],
+  );
 
   const totalConfirmed = useMemo(
     () => items.reduce((sum, item) => sum + item.quantity, 0),

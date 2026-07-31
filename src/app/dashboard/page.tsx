@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useMemo } from "react";
 import { Droplets, Target, UserRound, Weight, BookOpen } from "lucide-react";
 
 import { AppShell, RoleGuard } from "@/components/app-shell";
@@ -12,7 +13,11 @@ import { getClientRecordForEmail } from "@/lib/demo-data";
 export default function DashboardPage() {
   const user = useAuthStore((state) => state.user);
   const client = getClientRecordForEmail(user?.email);
-  const snapshotItems = useClientSnapshotStore((state) => state.getItemsForUser(user?.id));
+  const allSnapshotItems = useClientSnapshotStore((state) => state.items);
+  const snapshotItems = useMemo(
+    () => (!user ? [] : allSnapshotItems.filter((item) => item.userId === user.id)),
+    [allSnapshotItems, user],
+  );
 
   return (
     <RoleGuard role="client">
