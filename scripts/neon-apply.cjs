@@ -5,9 +5,17 @@ const schemaOnly = process.argv.includes("--schema");
 const seedOnly   = process.argv.includes("--seed");
 const clean      = process.argv.includes("--clean");
 
+function getDatabaseUrl() {
+  const databaseUrl = process.env.DATABASE_URL;
+  if (!databaseUrl) {
+    throw new Error("DATABASE_URL is required to apply the Neon SQL.");
+  }
+  return databaseUrl;
+}
+
 (async () => {
   const client = new Client({
-    connectionString: process.env.DATABASE_URL,
+    connectionString: getDatabaseUrl(),
     ssl: { rejectUnauthorized: false },
   });
   await client.connect();
@@ -44,4 +52,7 @@ const clean      = process.argv.includes("--clean");
   console.table(names.rows);
 
   await client.end();
-})().catch((e) => { console.error(e); process.exit(1); });
+})().catch((e) => {
+  console.error(e instanceof Error ? e.message : e);
+  process.exit(1);
+});
