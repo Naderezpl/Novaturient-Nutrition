@@ -1,6 +1,6 @@
 import { FOOD_GROUPS_REFERENCE } from "@/features/coach/food-groups-reference";
+import { getFoodGroupImageUrl } from "@/features/food-groups/image-config";
 import { categoryLabels } from "@/lib/demo-data";
-import { toImagePrompt } from "@/lib/utils";
 import type { ExchangeCategory } from "@/types/app";
 
 export type FoodGroupCatalogItem = {
@@ -94,9 +94,7 @@ export const FOOD_GROUPS_CATALOG: FoodGroupCatalogSection[] = FOOD_GROUPS_REFERE
       name: food.name,
       serving: food.serving,
       exchanges: food.exchanges,
-      imageUrl: toImagePrompt(
-        `premium food photography, ${food.name}, clean healthcare nutrition website, soft pastel background, elegant plated serving, professional studio light`,
-      ),
+      imageUrl: getFoodGroupImageUrl(group.category, food.name),
       tips: food.tips,
     };
 
