@@ -53,8 +53,15 @@ type Message = {
   stamp: string;
 };
 
+let nextMessageId = 0;
+
 function todayShortStamp() {
   return new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+}
+
+function createMessageId(prefix: "u" | "c") {
+  nextMessageId += 1;
+  return `${prefix}-${nextMessageId}`;
 }
 
 const SUGGESTION_CHIPS = [
@@ -108,7 +115,7 @@ export function CoachChat() {
   const submit = (raw = input.trim()) => {
     if (!raw) return;
     const userMsg: Message = {
-      id: `u-${Date.now()}`,
+      id: createMessageId("u"),
       role: "user",
       content: [raw],
       stamp: todayShortStamp(),
@@ -449,7 +456,7 @@ function buildReply(
 ): Message {
   const intent = detectIntent(raw, remaining);
   const base = {
-    id: `c-${Date.now()}`,
+    id: createMessageId("c"),
     stamp: todayShortStamp(),
     role: "coach" as const,
   };

@@ -227,7 +227,6 @@ export function buildTonightIdeas(
   body: string[];
   citation: string;
 } {
-  const available = exchangeOrder.filter((c) => remaining[c] > 0);
   const starch = Math.floor(remaining.starch);
   const protein = Math.floor(remaining.protein);
   const vegetable = Math.floor(remaining.vegetable);

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
@@ -49,6 +49,7 @@ function LoginPageInner() {
       role: params.get("role") === "dietitian" ? "dietitian" : "client",
     },
   });
+  const selectedRole = useWatch({ control: form.control, name: "role" });
 
   const onSubmit = (values: FormValues) => {
     const result = login(values.role, values.email, values.password);
@@ -79,7 +80,7 @@ function LoginPageInner() {
                   type="button"
                   onClick={() => form.setValue("role", role)}
                   className={`rounded-[18px] px-3 py-3 text-sm capitalize transition ${
-                    form.watch("role") === role ? "bg-[#ede8f5] text-slate-900" : "text-slate-500"
+                    selectedRole === role ? "bg-[#ede8f5] text-slate-900" : "text-slate-500"
                   }`}
                 >
                   {role}

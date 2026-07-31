@@ -34,9 +34,9 @@ export default function DashboardCoachPage() {
                 Kind, education-first coaching.
               </h1>
               <p className="mt-3 max-w-2xl text-[15px] leading-7 text-slate-500">
-                Ask for substitutions like "another protein than fish" and you&apos;ll get several
-                one-exchange picks — each citing the <em>Food Groups</em> category and smaller group
-                by name.
+                Ask for substitutions like &ldquo;another protein than fish&rdquo; and you&apos;ll
+                get several one-exchange picks — each citing the <em>Food Groups</em> category and
+                smaller group by name.
               </p>
             </div>
             <div className="flex flex-wrap gap-3">

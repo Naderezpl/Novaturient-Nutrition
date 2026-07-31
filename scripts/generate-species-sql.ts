@@ -1,7 +1,7 @@
 import { writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { FOOD_GROUPS_REFERENCE, EXCHANGE_GROUP_ORDER } from "../src/features/coach/food-groups-reference";
-import { cleanFoodPromptSubject, getFoodGroupImageUrl } from "../src/features/food-groups/image-config";
+import { getFoodGroupImageUrl } from "../src/features/food-groups/image-config";
 
 function sqlEscape(s: string): string {
   return s.replace(/'/g, "''").replace(/\\/g, "\\\\");
@@ -85,7 +85,6 @@ for (const group of FOOD_GROUPS_REFERENCE) {
   for (let i = 0; i < group.foods.length; i++) {
     const f = group.foods[i];
     sortCounter[group.category] += 1;
-    const subject = cleanFoodPromptSubject(f.name);
     const img = getFoodGroupImageUrl(group.category, f.name);
     const tip = f.tips ?? `${f.name} pairs well with complementary exchange groups for steady energy in a balanced meal.`;
     const keywords = Array.from(

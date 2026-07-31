@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 const { Client } = require("pg");
 
 const schemaOnly = process.argv.includes("--schema");
