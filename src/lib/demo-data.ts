@@ -13,6 +13,15 @@ import type {
 } from "@/types/app";
 import { toImagePrompt } from "@/lib/utils";
 
+export const categoryLabels: Record<ExchangeCategory, string> = {
+  starch: "Starch",
+  fruit: "Fruit",
+  vegetable: "Vegetable",
+  protein: "Protein",
+  dairy: "Dairy",
+  fat: "Fat",
+};
+
 const categoryConfig: Record<ExchangeCategory, { base: string[]; portions: string[]; tint: string }> = {
   starch: {
     base: ["Brown Rice", "Oatmeal", "Pita Bread", "Sweet Potato", "Quinoa", "Popcorn", "Pasta", "Tortilla"],
