@@ -176,18 +176,18 @@ declare
     ["water-and-hydration",          "Water and hydration",        "Nutrition"],
     ["vegetables",                   "Why vegetables matter",      "Nutrition"]
   ]';
-  rec jsonb; i int; slug text; title text; topic text;
+  rec jsonb; i int; v_slug text; v_title text; v_topic text;
 begin
   for i in 0..jsonb_array_length(specs)-1 loop
-    rec   := specs->i;
-    slug  := rec->>0;
-    title := rec->>1;
-    topic := rec->>2;
+    rec     := specs->i;
+    v_slug  := rec->>0;
+    v_title := rec->>1;
+    v_topic := rec->>2;
     insert into public.lessons (slug, title, topic, illustration_url, summary, tips, takeaways, content_blocks)
     values (
-      slug, title, topic,
+      v_slug, v_title, v_topic,
       'https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=' ||
-        urlencode('premium editorial healthcare illustration, soft pastel nutrition education, ' || title || ', glassmorphism card art, elegant minimal website visual') ||
+        urlencode('premium editorial healthcare illustration, soft pastel nutrition education, ' || v_title || ', glassmorphism card art, elegant minimal website visual') ||
         '&image_size=landscape_16_9',
       'A calm, practical lesson with quick wins, food examples, and simple decisions you can use today.',
       '["Pair one anchor food with one support food to make meals easier to repeat.","Use the exchange system to flex portions instead of labeling foods as good or bad.","Keep your meals familiar. Better structure is often more useful than full reinvention."]'::jsonb,

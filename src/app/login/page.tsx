@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -20,6 +21,22 @@ const schema = z.object({
 type FormValues = z.infer<typeof schema>;
 
 export default function LoginPage() {
+  return (
+    <Suspense
+      fallback={
+        <main className="flex min-h-screen items-center justify-center px-4 py-10">
+          <div className="rounded-full border border-white/60 bg-white/70 px-6 py-3 text-sm text-slate-500 backdrop-blur-xl">
+            Loading...
+          </div>
+        </main>
+      }
+    >
+      <LoginPageInner />
+    </Suspense>
+  );
+}
+
+function LoginPageInner() {
   const router = useRouter();
   const params = useSearchParams();
   const login = useAuthStore((state) => state.login);
