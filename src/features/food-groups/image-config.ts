@@ -2,7 +2,7 @@ import { toImagePrompt } from "@/lib/utils";
 import type { ExchangeCategory } from "@/types/app";
 
 const BASE_AESTHETIC =
-  "soft pastel healthcare website aesthetic, studio light, bright white background, minimal elegant plating, premium food photography, no borders, no letterbox, no pillarbox, no black bars, fills entire frame, edge-to-edge content";
+  "soft pastel healthcare website aesthetic, studio light, bright white background, minimal elegant plating, premium food photography, landscape horizontal composition, tight crop, edge-to-edge frame, subject fills the full image, no borders, no letterbox, no pillarbox, no black bars, no empty margins";
 
 function platingFor(category: ExchangeCategory): string {
   switch (category) {
@@ -706,6 +706,32 @@ export function buildFoodImagePrompt(category: ExchangeCategory, name: string) {
   return `${subject}, ${platingFor(category)}, ${BASE_AESTHETIC}`;
 }
 
+function fallbackSubjectFor(category: ExchangeCategory) {
+  switch (category) {
+    case "starch":
+      return "assorted starch exchange foods like rice, bread, oats, potatoes";
+    case "fruit":
+      return "assorted fresh fruit exchange foods like berries, apples, grapes, melon";
+    case "vegetable":
+      return "assorted colorful vegetables like leafy greens, cucumbers, tomatoes, broccoli";
+    case "protein":
+      return "assorted lean protein foods like chicken, fish, eggs, tofu";
+    case "dairy":
+      return "assorted dairy exchange foods like milk, yogurt, labneh, cheese";
+    case "fat":
+      return "assorted healthy fat foods like olive oil, avocado, nuts, seeds";
+    default:
+      return "healthy food exchange items";
+  }
+}
+
+export function getFoodGroupFallbackImageUrl(category: ExchangeCategory) {
+  return toImagePrompt(
+    `${fallbackSubjectFor(category)}, ${platingFor(category)}, ${BASE_AESTHETIC}`,
+    "landscape_4_3",
+  );
+}
+
 export function getFoodGroupImageUrl(category: ExchangeCategory, name: string) {
-  return toImagePrompt(buildFoodImagePrompt(category, name));
+  return toImagePrompt(buildFoodImagePrompt(category, name), "landscape_4_3");
 }

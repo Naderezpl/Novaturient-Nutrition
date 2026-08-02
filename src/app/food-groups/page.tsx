@@ -8,6 +8,7 @@ import { AppShell } from "@/components/app-shell";
 import { SiteHeader } from "@/components/site-header";
 import { Button } from "@/components/ui/button";
 import { FOOD_GROUPS_CATALOG } from "@/features/food-groups/catalog";
+import { getFoodGroupFallbackImageUrl } from "@/features/food-groups/image-config";
 import { useAuthStore } from "@/lib/auth-store";
 import { useClientSnapshotStore } from "@/lib/client-snapshot-store";
 import { getClientRecordForEmail } from "@/lib/demo-data";
@@ -207,14 +208,13 @@ function FoodGroupsContent() {
                     return (
                       <article
                         key={item.id}
-                        className="overflow-hidden rounded-[28px] border border-white/70 bg-white/82 shadow-[0_18px_40px_-28px_rgba(15,23,42,0.3)]"
+                        className="group overflow-hidden rounded-[28px] border border-white/70 bg-white/82 shadow-[0_18px_40px_-28px_rgba(15,23,42,0.3)]"
                       >
-                        <div className="aspect-[4/3] w-full overflow-hidden bg-white">
-                          <img
+                        <div className="aspect-[4/3] w-full overflow-hidden bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(241,245,249,0.92))]">
+                          <FoodCardImage
                             src={item.imageUrl}
+                            fallbackSrc={getFoodGroupFallbackImageUrl(item.category)}
                             alt={item.name}
-                            className="h-full w-full scale-[1.08] object-cover"
-                            draggable={false}
                           />
                         </div>
                         <div className="space-y-4 p-5">
@@ -293,5 +293,33 @@ function FoodGroupsContent() {
         </section>
       ))}
     </div>
+  );
+}
+
+function FoodCardImage({
+  src,
+  fallbackSrc,
+  alt,
+}: {
+  src: string;
+  fallbackSrc: string;
+  alt: string;
+}) {
+  const [imageSrc, setImageSrc] = useState(src);
+  const [usedFallback, setUsedFallback] = useState(false);
+
+  return (
+    <img
+      src={imageSrc}
+      alt={alt}
+      loading="lazy"
+      draggable={false}
+      className="h-full w-full object-cover object-center scale-[1.16] transition-transform duration-300 group-hover:scale-[1.2]"
+      onError={() => {
+        if (usedFallback) return;
+        setUsedFallback(true);
+        setImageSrc(fallbackSrc);
+      }}
+    />
   );
 }

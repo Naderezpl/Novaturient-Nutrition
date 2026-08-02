@@ -5,10 +5,12 @@ import { usePathname, useRouter } from "next/navigation";
 import { Search, Home, Apple, BookOpen, Sparkles, Settings, Users, BarChart3, LogOut } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 
+import { OnboardingModal } from "@/components/onboarding-modal";
 import { Button } from "@/components/ui/button";
 import { buildSearchResults } from "@/lib/demo-data";
 import { cn } from "@/lib/utils";
 import { getDefaultRedirect, useAuthStore } from "@/lib/auth-store";
+import { useClientRecordsStore } from "@/lib/client-records-store";
 import type { UserRole } from "@/types/app";
 
 type AppShellProps = {
@@ -21,7 +23,7 @@ type AppShellProps = {
 
 const clientLinks = [
   { href: "/dashboard", label: "Dashboard", icon: Home },
-  { href: "/dashboard/foods", label: "Foods", icon: Apple },
+  { href: "/food-groups", label: "Foods", icon: Apple },
   { href: "/dashboard/meals", label: "Meals", icon: Sparkles },
   { href: "/dashboard/coach", label: "AI Coach", icon: Sparkles },
   { href: "/dashboard/learn", label: "Learn", icon: BookOpen },
@@ -45,6 +47,13 @@ export function RoleGuard({
   const hydrated = useAuthStore((state) => state.hydrated);
   const user = useAuthStore((state) => state.user);
   const activeRole = useAuthStore((state) => state.role);
+  const onboardingRequired = useAuthStore((state) => state.onboardingRequired);
+  const persistedRecord = useClientRecordsStore((state) =>
+    role === "client" && user ? state.getRecord(user) : null,
+  );
+  const needsOnboarding =
+    role === "client" &&
+    !!(onboardingRequired || (persistedRecord && !persistedRecord.onboardingCompleted));
 
   useEffect(() => {
     if (!hydrated) {
@@ -66,6 +75,19 @@ export function RoleGuard({
           Loading your workspace...
         </div>
       </div>
+    );
+  }
+
+  if (needsOnboarding) {
+    return (
+      <>
+        <div className="flex min-h-screen items-center justify-center bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.95),_rgba(229,231,237,0.75),_rgba(237,232,245,0.8))]">
+          <div className="max-w-md rounded-full border border-white/60 bg-white/70 px-6 py-3 text-center text-sm text-slate-500 backdrop-blur-xl">
+            Almost ready — finish the quick setup screen to see your dashboard.
+          </div>
+        </div>
+        <OnboardingModal />
+      </>
     );
   }
 
@@ -115,16 +137,6 @@ export function AppShell({ role, title, subtitle, children, actions }: AppShellP
                 </Link>
               );
             })}
-            <Link
-              href="/food-groups"
-              className={cn(
-                "flex items-center gap-3 rounded-2xl px-4 py-3 text-sm text-slate-500 transition-all hover:bg-white/60 hover:text-slate-900",
-                pathname === "/food-groups" && "bg-white/85 text-slate-900 shadow-sm",
-              )}
-            >
-              <BookOpen className="h-4 w-4" />
-              Food Groups
-            </Link>
           </nav>
 
           <div className="mt-auto rounded-[24px] bg-gradient-to-br from-white/80 via-white/55 to-white/35 p-5">

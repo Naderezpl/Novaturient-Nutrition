@@ -1,3 +1,7 @@
+import {
+  persistedRecordToClientRecord,
+  useClientRecordsStore,
+} from "@/lib/client-records-store";
 import type {
   AdherencePoint,
   ClientRecord,
@@ -403,7 +407,25 @@ export const dietitianUser: DemoUser = {
 
 export const currentClient = clients[4];
 
-export function getClientRecordForEmail(email?: string | null) {
+export function getClientRecordForEmail(
+  email?: string | null,
+  userOverride?: DemoUser | null,
+): ClientRecord {
+  const activeUser = userOverride ?? (email ? ({ email } as DemoUser) : null);
+  if (activeUser) {
+    try {
+      const persisted =
+        useClientRecordsStore.getState().getRecord(activeUser) ??
+        (activeUser.id
+          ? useClientRecordsStore.getState().recordsByUserId[activeUser.id]
+          : undefined);
+      if (persisted && persisted.onboardingCompleted) {
+        const mapped = persistedRecordToClientRecord(persisted);
+        if (mapped) return mapped;
+      }
+    } catch (_e) {}
+  }
+
   if (!email) {
     return currentClient;
   }
@@ -426,7 +448,7 @@ export function buildSearchResults(query: string): SearchResult[] {
       type: "food" as const,
       title: item.name,
       subtitle: `${item.servingSize} • ${item.category}`,
-      href: "/dashboard/foods",
+      href: "/food-groups",
     }));
 
   const lessonMatches = lessons

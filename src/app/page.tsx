@@ -3,13 +3,37 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight, BookOpen, BrainCircuit, HeartHandshake, HeartPulse, ShieldCheck, Sparkles, Users } from "lucide-react";
+import { useMemo } from "react";
 
 import { SiteHeader } from "@/components/site-header";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { useAuthStore } from "@/lib/auth-store";
+import { useClientRecordsStore } from "@/lib/client-records-store";
 import { clients, coachPrompts, defaultClientPlan, lessons } from "@/lib/demo-data";
 
 export default function Home() {
+  const user = useAuthStore((s) => s.user);
+  const hydrated = useAuthStore((s) => s.hydrated);
+  const persistedRaw = useClientRecordsStore((s) => {
+    if (!user) return null;
+    const byId = s.recordsByUserId[user.id];
+    if (byId) return byId;
+    if (user.email) {
+      const uid = (s.recordsByEmail || {})[user.email.toLowerCase()];
+      if (uid) return s.recordsByUserId[uid] ?? null;
+    }
+    return null;
+  });
+  const snapshotPlan = useMemo(() => {
+    if (persistedRaw && persistedRaw.onboardingCompleted) return persistedRaw.plan;
+    if (hydrated && user) {
+      const demo = clients.find((c) => c.user.email === user.email);
+      if (demo) return demo.plan;
+    }
+    return defaultClientPlan;
+  }, [persistedRaw, hydrated, user]);
+  const snapshotName = persistedRaw?.user.fullName ?? user?.fullName ?? null;
   return (
     <>
       <SiteHeader />
@@ -102,11 +126,13 @@ export default function Home() {
               <div className="grid gap-4">
                 <Card className="overflow-hidden shadow-[0_26px_70px_-40px_rgba(15,23,42,0.45)]">
                   <CardHeader>
-                    <CardDescription>Today&apos;s exchange plan</CardDescription>
+                    <CardDescription>
+                      {snapshotName ? `${snapshotName}'s exchange plan` : "Today's exchange plan"}
+                    </CardDescription>
                     <CardTitle>Client snapshot</CardTitle>
                   </CardHeader>
                   <CardContent className="grid gap-3 sm:grid-cols-2">
-                    {Object.entries(defaultClientPlan).map(([category, total]) => (
+                    {Object.entries(snapshotPlan).map(([category, total]) => (
                       <div
                         key={category}
                         className="rounded-[22px] bg-white/80 p-4 ring-1 ring-white/70"
